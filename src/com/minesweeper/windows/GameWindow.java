@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.Random;
+
 
 
 public class GameWindow {
@@ -16,14 +18,17 @@ public class GameWindow {
     private final int mines;
     private final int width;
     private final int height;
-
+    private final int buttonSize;
+    private Minefield minefield;
 
     public GameWindow() {
         rows = 16;
         columns = 16;
         mines = 40;
-        width = rows * 40;
-        height = (columns * 40) + 40;
+        buttonSize = 20;
+        width = rows * buttonSize;
+        height = (columns * buttonSize) + 40;
+        minefield = new Minefield(rows, columns, mines);
         createWindow();
     }
 
@@ -31,8 +36,13 @@ public class GameWindow {
         this.rows = rows;
         this.columns = columns;
         this.mines = mines;
-        width = rows * 40;
-        height = (columns * 40) + 40;
+        if(rows * 20 < 240) {
+            buttonSize = 240 / rows;
+        } else { buttonSize = 20; }
+
+        width = rows * buttonSize;
+        height = (columns * buttonSize) + 40;
+        minefield = new Minefield(rows, columns, mines);
         createWindow();
     }
 
@@ -74,9 +84,10 @@ public class GameWindow {
         fieldPanel.setLayout(new GridLayout(rows, columns, 0, 0));
 
         for (int i = 0; i < rows * columns; i++) {
-            JButton mineSpot = new JButton();
-            mineSpot.setPreferredSize(new Dimension(40,40));
-            fieldPanel.add(mineSpot);
+            JButton fieldSpot = new JButton();
+            fieldSpot.setPreferredSize(new Dimension(buttonSize,buttonSize));
+            fieldPanel.add(fieldSpot);
+            minefield.addToField(fieldSpot, i / rows, i % columns);
         }
 
         container.add(fieldPanel);
@@ -104,6 +115,10 @@ public class GameWindow {
         helpMenu.add(about);
         exitGame.addActionListener((ev) -> System.exit(0));
         return menu;
+    }
+
+    public Minefield getMinefield() {
+        return minefield;
     }
 
 }
