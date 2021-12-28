@@ -25,7 +25,7 @@ public class GameWindow {
         rows = 16;
         columns = 16;
         mines = 40;
-        buttonSize = 20;
+        buttonSize = 40;
         width = rows * buttonSize;
         height = (columns * buttonSize) + 40;
         minefield = new Minefield(rows, columns, mines);
@@ -71,7 +71,7 @@ public class GameWindow {
         textBox.add(new JLabel("Time Elapsed: 00:00"));
         textBox.add(new JLabel("Mines Remaining: " + mines));
         // Adds all elements to outer HUD panel
-        hudPanel.add(new JButton("Restart"));
+        hudPanel.add(new JToggleButton("Restart"));
         hudPanel.add(Box.createHorizontalGlue());
         hudPanel.add(textBox);
         // Adds the HUD panel to the Frame
@@ -84,10 +84,11 @@ public class GameWindow {
         fieldPanel.setLayout(new GridLayout(rows, columns, 0, 0));
 
         for (int i = 0; i < rows * columns; i++) {
-            JButton fieldSpot = new JButton();
+            JToggleButton fieldSpot = new JToggleButton();
             fieldSpot.setPreferredSize(new Dimension(buttonSize,buttonSize));
             fieldPanel.add(fieldSpot);
-            minefield.addToField(fieldSpot, i / rows, i % columns);
+            minefield.addToField(fieldSpot, i);
+            fieldSpot.addActionListener((ev) -> minefield.buttonPress(fieldSpot));
         }
 
         container.add(fieldPanel);
