@@ -1,13 +1,11 @@
-package com.minesweeper.windows;
-import com.minesweeper.*;
-import com.minesweeper.windows.*;
-import com.minesweeper.field.*;
+package OldAttempt.windows;
+import OldAttempt.field.Cell;
+import OldAttempt.field.Minefield;
+import OldAttempt.*;
+import OldAttempt.windows.*;
+import OldAttempt.field.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.Random;
-
 
 
 public class GameWindow {
@@ -83,12 +81,19 @@ public class GameWindow {
         fieldPanel.setPreferredSize(new Dimension(width,height));
         fieldPanel.setLayout(new GridLayout(rows, columns, 0, 0));
 
+//        for (int i = 0; i < rows * columns; i++) {
+//            JToggleButton fieldSpot = new JToggleButton();
+//            fieldSpot.setPreferredSize(new Dimension(buttonSize,buttonSize));
+//            fieldPanel.add(fieldSpot);
+//            minefield.addToField(fieldSpot, i);
+//            fieldSpot.addActionListener((ev) -> minefield.buttonPress(fieldSpot));
+//        }
         for (int i = 0; i < rows * columns; i++) {
-            JToggleButton fieldSpot = new JToggleButton();
-            fieldSpot.setPreferredSize(new Dimension(buttonSize,buttonSize));
-            fieldPanel.add(fieldSpot);
-            minefield.addToField(fieldSpot, i);
-            fieldSpot.addActionListener((ev) -> minefield.buttonPress(fieldSpot));
+            Cell fieldCell = new Cell((i/10)+1, (i%10)+1);
+            fieldCell.setPreferredSize(new Dimension(buttonSize,buttonSize));
+            fieldPanel.add(fieldCell);
+            minefield.addToField(fieldCell, i);
+            fieldCell.addActionListener((ev) -> minefield.buttonPress(fieldCell));
         }
 
         container.add(fieldPanel);

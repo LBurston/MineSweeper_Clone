@@ -1,8 +1,7 @@
-package com.minesweeper;
-import com.minesweeper.field.*;
-import com.minesweeper.windows.*;
-
-import java.util.HashSet;
+package OldAttempt;
+import OldAttempt.windows.GameWindow;
+import OldAttempt.field.*;
+import OldAttempt.windows.*;
 
 public class Game {
 

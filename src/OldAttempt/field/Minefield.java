@@ -1,8 +1,8 @@
-package com.minesweeper.field;
+package OldAttempt.field;
 
-import com.minesweeper.*;
-import com.minesweeper.field.*;
-import com.minesweeper.windows.*;
+import OldAttempt.*;
+import OldAttempt.field.*;
+import OldAttempt.windows.*;
 
 import javax.swing.*;
 import java.lang.reflect.Array;
@@ -32,9 +32,38 @@ public class Minefield {
         populateField();
     }
 
+    public int getSpotRow(JToggleButton spot) {
+        return (fieldIndexOf(spot) / rows) + 1;
+    }
+
+    public int getSpotColumn(JToggleButton spot) {
+        return (fieldIndexOf(spot) % columns) + 1;
+    }
+
+    public int getSurroundingSpots(JToggleButton spot) {
+        int spotRow = getSpotRow(spot);
+        int spotColumn = getSpotColumn(spot);
+        if(spotRow != 1 || spotRow != rows) {
+            if(spotColumn != 1 || spotColumn != columns) {return 8;}
+            return 5;
+        }
+        return 3;
+    }
+
+    public void generateRevealList(JToggleButton originSpot) {
+        int surroundingSpots = getSurroundingSpots(originSpot);
+        int spotRow = getSpotRow(originSpot);
+        int spotColumn = getSpotColumn(originSpot);
+        int[] revealList = new int[rows*columns];
+        if(surroundingSpots==8) {
+
+        }
+
+    }
+
     public void buttonPress(JToggleButton spot) {
         System.out.println(isPressed[fieldIndexOf(spot)]);
-        if(isPressed[fieldIndexOf(spot)] = false) {
+        if(!isPressed[fieldIndexOf(spot)]) {
             isPressed[fieldIndexOf(spot)] = true;
             if (fieldValueOf(spot) < 0) {
                 System.out.println("Game Over");
